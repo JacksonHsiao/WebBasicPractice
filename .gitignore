@@ -11,3 +11,7 @@ gen
 .git
 
 .vscode
+*.code-workspace
+/.idea/*.iml
+/.idea
+*.iml
