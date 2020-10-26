@@ -1,0 +1,123 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>扇形导航</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        html,
+        body {
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        #wrap {
+            position: fixed;
+            right: 15px;
+            bottom: 15px;
+            width: 50px;
+            height: 50px;
+        }
+        
+        #wrap>.inner {
+            height: 100%;
+        }
+        
+        #wrap>.inner>img {
+            position: absolute;
+            left: 0;
+            top: 0;
+            margin: 4px;
+            border-radius: 50%;
+        }
+        
+        #wrap>.home {
+            position: absolute;
+            left: 0;
+            top: 0;
+            z-index: 1;
+            width: 100%;
+            height: 100%;
+            background: url(images/home.png) no-repeat;
+            border-radius: 50%;
+            transition: 1s;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrap">
+        <div class="inner">
+            <img src="images/clos.png" alt="" />
+            <img src="images/full.png" alt="" />
+            <img src="images/open.png" alt="" />
+            <img src="images/prev.png" alt="" />
+            <img src="images/refresh.png" alt="" />
+        </div>
+        <div class="home"></div>
+    </div>
+</body>
+<script type="text/javascript">
+    window.onload = function() {
+        var homeEle = document.querySelector(".home");
+        var images = document.querySelectorAll("#wrap>.inner>img");
+        var flag = true;
+        var c = 140;
+
+        for (let i = 0; i < images.length; i++) {
+            images[i].onclick = function() {
+                this.style.transition = "0.5s";
+                this.style.transform = "rotate(-720deg) scale(2)";
+                this.style.opacity = 0.1;
+                this.addEventListener("transitionend", fn);
+            };
+        }
+
+        function fn() {
+            this.style.transition = "0.3s";
+            this.style.transform = "rotate(-720deg) scale(1)";
+            this.style.opacity = 1;
+            this.removeEventListener("transitionend", fn);
+        }
+
+        homeEle.onclick = function() {
+            if (flag) {
+                this.style.transform = "rotate(-720deg)";
+                for (var i = 0; i < images.length; i++) {
+                    images[i].style.transition = "1s" + i * 0.1 + "s";
+                    images[i].style.transform = "rotate(-720deg) scale(1)";
+                    images[i].style.left = -getPoint(c, (90 * i) / (images.length - 1)).left + "px";
+                    images[i].style.top = -getPoint(c, (90 * i) / (images.length - 1)).top + "px";
+                }
+            } else {
+                this.style.transform = "rotate(0deg)";
+                for (var i = 0; i < images.length; i++) {
+                    images[i].style.transition =
+                        "1s" + (images[i].length - i - 1) * 0.1 + "s";
+                    images[i].style.transform = "rotate(0deg) scale(1)";
+                    images[i].style.left = 0 + "px";
+                    images[i].style.top = 0 + "px";
+                }
+            }
+            flag = !flag;
+        };
+
+        // 已知第三边和一个角
+        function getPoint(c, deg) {
+            var x = Math.round(c * Math.sin((deg * Math.PI) / 180));
+            var y = Math.round(c * Math.cos((deg * Math.PI) / 180));
+
+            return {
+                left: x,
+                top: y,
+            };
+        }
+    };
+</script>
+
+</html>
