@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS3响应式布局</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        #wrap {
+            width: 100px;
+            height: 100px;
+            margin: 100px auto;
+            border: 5px solid;
+        }
+        
+        @media screen {
+            /* 规则 */
+            #wrap {
+                border: 10px solid;
+            }
+        }
+        
+        @media screen and (width: 800px) {
+            /* 规则 */
+            #wrap {
+                border: 10px dashed;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrap"></div>
+</body>
+
+</html>
